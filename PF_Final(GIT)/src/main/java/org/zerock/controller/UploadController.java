@@ -36,7 +36,7 @@ import net.coobird.thumbnailator.Thumbnailator;
 @Controller
 @Log4j
 public class UploadController {
-
+	
 	@GetMapping("/uploadForm")
 	public void uploadForm() {
 		log.info("upload form");
@@ -85,6 +85,8 @@ public class UploadController {
 		return false;
 	}
 	
+	// 로그인한 사용자가 파일을 업로드하기 위한 매핑
+	// Ajax를 사용하여 파일을 업로드한다.
 	@PreAuthorize("isAuthenticated()")
 	@PostMapping(value = "/uploadAjaxAction", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody

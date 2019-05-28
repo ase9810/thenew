@@ -83,6 +83,8 @@ public class BoardController {
 	}
 
 
+	// 수정을 위한 매핑
+	// 로그인한 사용자와 글의 작성자가 일치해야 한다.
 	@PreAuthorize("principal.username == #board.writer")
 	@PostMapping("/modify")
 	
@@ -96,6 +98,8 @@ public class BoardController {
 		return "redirect:/board/list" + cri.getListLink();
 	}
 	
+	// 삭제를 위한 매핑
+	// 로그인한 사용자와 글의 작성자가 일치해야 한다.
 	@PreAuthorize("principal.username == #writer")
 	@PostMapping("/remove")
 	public String remove(@RequestParam("bno") Long bno, Criteria cri, RedirectAttributes rttr, String writer) {
@@ -110,6 +114,7 @@ public class BoardController {
 		return "redirect:/board/list" + cri.getListLink();
 	}
 	
+	// 첨부되어 있는 파일을 삭제하는 메소드
 	private void deleteFiles(List<BoardAttachVO> attachList) {
 		if (attachList == null || attachList.size() == 0) {
 			return;
@@ -130,6 +135,7 @@ public class BoardController {
 		});// end foreachd
 	}
 
+	// 첨부되어 있는 파일을 가져오기 위한 매핑
 	@GetMapping(value = "/getAttachList", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
 	public ResponseEntity<List<BoardAttachVO>> getAttachList(Long bno) {

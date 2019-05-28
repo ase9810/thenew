@@ -9,6 +9,8 @@
     <result property="userid" column="userid"/>
     <result property="userpw" column="userpw"/>
     <result property="userName" column="username"/>
+    <result property="userPhone" column="userphone"/>
+    <result property="userAddress" column="useraddress"/>
     <result property="regDate" column="regdate"/>
     <result property="updateDate" column="updatedate"/>
     <collection property="authList" resultMap="authMap">

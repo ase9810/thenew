@@ -11,13 +11,14 @@ import lombok.extern.log4j.Log4j;
 @Controller
 @Log4j
 public class CommonController {
-
+	// 접속 실패시의 매핑
 	@GetMapping("/accessError")
 	public void accessDenied(Authentication auth, Model model) {
 		log.info("access Denied : " + auth);
 		model.addAttribute("msg", "Access Denied");
 	}
 
+	// 로그인 페이지의 매핑
 	@GetMapping("/customLogin")
 	public void loginInput(String error, String logout, Model model) {
 		log.info("error: " + error);
@@ -30,11 +31,13 @@ public class CommonController {
 		}
 	}
 
+	// 로그아웃 페이지의 매핑
 	@GetMapping("/customLogout")
 	public void logoutGET() {
 		log.info("custom logout");
 	}
 
+	// 포스트 방식의 로그아웃 페이지의 매핑
 	@PostMapping("/customLogout")
 	public void logoutPost() {
 		log.info("post custom logout");
