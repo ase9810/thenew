@@ -1,10 +1,8 @@
 console.log("Reply Module........");
 
 var replyService = (function() {
-	//호스트주소에 시작부터 끝까지 인덱스번호를 가져옴.
-	var hostIndex = location.href.indexOf( location.host ) + location.host.length;
 	//'/{contextPath}'를 가져온다
-	var contextPath = location.href.substring(hostIndex, location.href.indexOf('/', hostIndex + 1));
+	var contextPath = sessionStorage.getItem("contextpath");
 	
 	function add(reply, callback, error) {
 		console.log("add reply...............");

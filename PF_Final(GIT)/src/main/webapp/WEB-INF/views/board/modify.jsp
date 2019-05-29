@@ -24,7 +24,6 @@
 			<div class="panel-body">
 				<form role="form" action="${pageContext.request.contextPath}/board/modify" method="post">
 					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-					
 					<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }"/>'>
 					<input type='hidden' name='amount'	value='<c:out value="${cri.amount }"/>'>
 					<input type='hidden' name='type' value='<c:out value="${cri.type }"/>'>
@@ -195,10 +194,7 @@
 
 <script>
 	$(document).ready(function() {
-		//호스트주소에 시작부터 끝까지 인덱스번호를 가져옴.
-		var hostIndex = location.href.indexOf( location.host ) + location.host.length;
-		//'/{contextPath}'를 가져온다
-		var contextPath = location.href.substring(hostIndex, location.href.indexOf('/', hostIndex + 1));
+		var contextPath = sessionStorage.getItem("contextpath");
 		
 		(function() {
 			var bno = '<c:out value="${board.bno}"/>';
