@@ -216,7 +216,7 @@ $(document).ready(function () {
 	var bnoValue = '<c:out value="${board.bno}"/>';
 	var replyUL = $(".chat");
     showList(1);
-    function showList(page){
+    function showList(page) {
     	console.log("show list " + page);
     	// 해당 게시물의 댓글을 가져오기 위함
     	replyService.getList({bno:bnoValue,page: page|| 1 }, function(replyCnt, list) {
@@ -234,6 +234,7 @@ $(document).ready(function () {
     		var str="";
     		
     		if(list == null || list.length == 0) {
+    			replyUL.html(str);
     			return;
     		}
     		
