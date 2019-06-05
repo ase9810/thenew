@@ -73,6 +73,13 @@ public class BoardServiceImpl implements BoardService {
 		return mapper.delete(bno) == 1;
 	}
 
+	//공지사항
+	@Override
+	public List<BoardVO> getNoticeList(Criteria cri) {
+		log.info("get List with criteria: " + cri);
+		return mapper.getNoticeListWithPaging(cri);
+	}
+	
 	@Override
 	public List<BoardVO> getList(Criteria cri) {
 		log.info("get List with criteria: " + cri);

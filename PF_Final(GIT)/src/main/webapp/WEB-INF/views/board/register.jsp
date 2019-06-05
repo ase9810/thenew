@@ -1,19 +1,22 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 
+<!-- 앞의 내용은 header에서 이어서 작동한다. -->
 <%@include file="../includes/header.jsp"%>
+
+<!-- 
+웹 에디터(CKEDITOR 4.11.4 (standard)) 경로 지정
+ -->
+<script type="text/javascript" src="../resources/ckeditor/ckeditor.js"></script>
 
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Board Register</h1>
+		<h1 class="page-header">후기 & 공지</h1>
 	</div>
-	<!-- /.col-lg-12 -->
 </div>
-<!-- /.row -->
 
 <style>
 	.uploadResult {
@@ -62,47 +65,54 @@
 <div class="row">
 	<div class="col-lg-12">
 		<div class="panel panel-default">
+			<div class="panel-heading">&nbsp;</div>
 
-			<div class="panel-heading">Board Register</div>
-			<!-- /.panel-heading -->
 			<div class="panel-body">
-
+				
 				<form role="form" action="${pageContext.request.contextPath}/board/register" method="post">
 					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+					<!-- 관리자 권한일 경우 공지/새글 선택해서 그에 맞는 value값 전달 -->
+					<sec:authorize access="hasRole('ROLE_ADMIN')">
+						<input type="radio" name="notice" value="0">공지
+						<input type="radio" name="notice" value="1" checked>새 글						
+					</sec:authorize>
+					<!-- 일반 회원 권한일 경우 새 글만 등록할 수 있는데 notice의 value값을 hidden시켜서 전달 -->
+					<sec:authorize access="hasRole('ROLE_USER')">
+						<input type="hidden" name="notice" value="1">					
+					</sec:authorize>
 					<div class="form-group">
-						<label>Title</label>
+						<label>제목</label>
 						<input class="form-control" name='title'>
+					</div>	
+	
+    				<div class="form-group">
+    					<label>내용</label>
+    					<!-- CKEDITOR 툴을 사용할 textarea -->    				
+    					<textarea class="form-control" name="content" id="editor"></textarea>
+    						<script>
+							CKEDITOR.replace('editor',
+												{ height:500
+											});
+   						 </script>
 					</div>
-
+					
 					<div class="form-group">
-						<label>Text area</label>
-						<textarea class="form-control" rows="3" name='content'></textarea>
-					</div>
-
-					<div class="form-group">
-						<label>Writer</label>
+						<label>작성자</label>
 						<input class="form-control" name='writer' value='<sec:authentication property="principal.username"/>' readonly="readonly">
-					</div>
-					<button type="submit" class="btn btn-default">Submit Button</button>
-					<button type="reset" class="btn btn-default">Reset Button</button>
+					</div>			
+					<button type="submit" class="btn btn-default">작성 완료</button>
+					<button type="reset" class="btn btn-default">다시 작성</button>
 				</form>
-
 			</div>
-			<!--  end panel-body -->
-
 		</div>
-		<!--  end panel-body -->
 	</div>
-	<!-- end panel -->
 </div>
-<!-- /.row -->
 
 <!-- 새로 추가하는 부분 -->
 <div class="row">
 	<div class="col-lg-12">
 		<div class="panel panel-default">
-			<div class="panel-heading">File Attach</div>
-			<!-- /.panel-heading -->
+			<div class="panel-heading">첨부 파일</div>
 			
 			<div class="panel-body">
 				<div class="form-group uploadDiv">
@@ -112,13 +122,9 @@
 					<ul></ul>
 				</div>
 			</div>
-			<!--  end panel-body -->
 		</div>
-		<!--  end panel-body -->
 	</div>
-	<!-- end panel -->
 </div>
-<!-- /.row -->
 
 <script>
 	$(document).ready(function(e) {
@@ -190,7 +196,7 @@
 					console.log(result);
 					showUploadResult(result); //업로드 결과 처리 함수 
 				}
-			}); //$.ajax
+			});
 		});
 		
 		function showUploadResult(uploadResultArr) {
@@ -249,9 +255,10 @@
            			alert(result);
          			targetLi.remove();
          		}
-    		}); //$.ajax
+    		});
    		});
 	});
 </script>
 
+<!-- 뒤의 내용은 footer에서 이어서 작동한다. -->
 <%@include file="../includes/footer.jsp"%>

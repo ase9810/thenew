@@ -18,4 +18,6 @@ public class BoardVO {
   private int replyCnt;
   
   private List<BoardAttachVO> attachList;
+  
+  private char notice;
 }

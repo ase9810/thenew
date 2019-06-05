@@ -1,62 +1,77 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 
 <!-- 앞의 내용은 header에서 이어서 작동한다. -->
 <%@include file="../includes/header.jsp"%>
+
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Tables</h1>
+		<h1 class="page-header">후기 & 공지</h1>
 	</div>
-	<!-- /.col-lg-12 -->
 </div>
-<!-- /.row -->
 
 <div class="row">
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				Board List Page
-				<sec:authorize access="isAuthenticated()">
-					<button id='regBtn' type="button" class="btn btn-xs pull-right">Register New Board</button>
+				&nbsp;
+				<!-- 일반 사용자의 경우 새 글 등록 버튼 활성화 -->
+				<sec:authorize access="hasRole('ROLE_USER')">
+					<button id='regBtn' type="button" class="btn btn-xs pull-right">새 글 등록</button>
 				</sec:authorize>
+				<!-- 관리자의 경우 새 글 등록 / 공지 등록 버튼 활성화 -->
+				<sec:authorize access="hasRole('ROLE_ADMIN')">
+					<button id='regBtnNotice' type="button" class="btn btn-xs pull-right">새 글 등록 / 공지 등록</button>
+				</sec:authorize>
+				<!-- 로그인되지 않은 사용자의 경우 새 글 작성을 누르면 로그인 홈페이지로 이동 -->
 				<sec:authorize access="isAnonymous()">
-					<button onclick='self.location = "${pageContext.request.contextPath}/customLogin"' class="btn btn-xs pull-right">Register New Board</button>
+					<button onclick='self.location = "${pageContext.request.contextPath}/customLogin"' class="btn btn-xs pull-right">새 글 작성</button>
 				</sec:authorize>
 			</div>
 
-			<!-- /.panel-heading -->
 			<div class="panel-body">
 				<table class="table table-striped table-bordered table-hover">
 					<thead>
-						<tr>
-							<th>#번호</th>
-							<th>제목</th>
-							<th>작성자</th>
-							<th>작성일</th>
-							<th>수정일</th>
-						</tr>
+						<tr style="background-color:rgb(204, 204, 204);">
+							<th style="text-align:center">번호</th>
+							<th style="text-align:center">제목</th>
+							<th style="text-align:center">작성자</th>
+							<th style="text-align:center">작성일</th>
+						</tr>					
 					</thead>
-					
-					<!-- list 값을 받아서 for문을 실행 -->
-					<c:forEach items="${list}" var="board">
-						<tr>
-							<td><c:out value="${board.bno}" /></td>
-							<%-- <td><a href='/board/get?bno=<c:out value="${board.bno}"/>'><c:out value="${board.title}"/></a></td> --%>
-
-							<td><a class='move' href='<c:out value="${board.bno}"/>'>
+		
+					<!-- 공지사항을 상단에 보여주기 -->
+					<!--noticeList 값을 받아서 for문을 실행 -->
+					<c:forEach items="${noticeList}" var="board">
+						<!-- 공지사항에 해당되는 부분만 색 변경 -->
+						<tr style="background-color:rgb(230, 230, 230);">
+							<td style="text-align:center; color:red;"><b>공지</b></td>
+							<td>
+								<a class='move' href='<c:out value="${board.bno}"/>'>
 									<c:out value="${board.title}" />
 									<b>[<c:out value="${board.replyCnt}"/>]</b>
-							</a></td>
-
-							<td><c:out value="${board.writer}" /></td>
-							<td><fmt:formatDate pattern="yyyy-MM-dd"
-									value="${board.regdate}" /></td>
-							<td><fmt:formatDate pattern="yyyy-MM-dd"
-									value="${board.updateDate}" /></td>
+								</a>
+							</td>
+							<td style="text-align:center"><c:out value="${board.writer}" /></td>
+							<td style="text-align:center"><fmt:formatDate pattern="yyyy-MM-dd" value="${board.regdate}" /></td>
+						</tr>
+					</c:forEach>
+					
+					<!--list 값을 받아서 for문을 실행 -->
+					<c:forEach items="${list}" var="board">
+						<tr>
+							<td style="text-align:center"><c:out value="${board.bno}" /></td>
+							<td>
+								<a class='move' href='<c:out value="${board.bno}"/>'>
+									<c:out value="${board.title}" />
+									<b>[<c:out value="${board.replyCnt}"/>]</b>
+								</a>
+							</td>
+							<td style="text-align:center"><c:out value="${board.writer}" /></td>
+							<td style="text-align:center"><fmt:formatDate pattern="yyyy-MM-dd" value="${board.regdate}" /></td>
 						</tr>
 					</c:forEach>
 				</table>
@@ -66,35 +81,27 @@
 						<!-- 검색 부분 -->
 						<form id='searchForm' action="${pageContext.request.contextPath}/board/list" method='get'>
 							<select name='type'>
-								<option value=""
-									<c:out value="${pageMaker.cri.type == null?'selected':''}"/>>--</option>
-								<option value="T"
-									<c:out value="${pageMaker.cri.type eq 'T'?'selected':''}"/>>제목</option>
-								<option value="C"
-									<c:out value="${pageMaker.cri.type eq 'C'?'selected':''}"/>>내용</option>
-								<option value="W"
-									<c:out value="${pageMaker.cri.type eq 'W'?'selected':''}"/>>작성자</option>
-								<option value="TC"
-									<c:out value="${pageMaker.cri.type eq 'TC'?'selected':''}"/>>제목 or 내용</option>
-								<option value="TW"
-									<c:out value="${pageMaker.cri.type eq 'TW'?'selected':''}"/>>제목 or 작성자</option>
-								<option value="TWC"
-									<c:out value="${pageMaker.cri.type eq 'TWC'?'selected':''}"/>>제목 or 내용 or 작성자</option>
+								<option value="" <c:out value="${pageMaker.cri.type == null?'selected':''}"/>>--</option>
+								<option value="T" <c:out value="${pageMaker.cri.type eq 'T'?'selected':''}"/>>제목</option>
+								<option value="C" <c:out value="${pageMaker.cri.type eq 'C'?'selected':''}"/>>내용</option>
+								<option value="W" <c:out value="${pageMaker.cri.type eq 'W'?'selected':''}"/>>작성자</option>
+								<option value="TC" <c:out value="${pageMaker.cri.type eq 'TC'?'selected':''}"/>>제목 or 내용</option>
+								<option value="TW" <c:out value="${pageMaker.cri.type eq 'TW'?'selected':''}"/>>제목 or 작성자</option>
+								<option value="TWC" <c:out value="${pageMaker.cri.type eq 'TWC'?'selected':''}"/>>제목 or 내용 or 작성자</option>
 							</select>
 							<input type='text' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>' />
 							<input type='hidden' name='pageNum'	value='<c:out value="${pageMaker.cri.pageNum}"/>' />
 							<input type='hidden' name='amount' value='<c:out value="${pageMaker.cri.amount}"/>' />
-							<button class='btn btn-default'>Search</button>
+							<button class='btn btn-default'>검색</button>
 						</form>
 					</div>
 				</div>
-
 
 				<div class='pull-right'>
 					<ul class="pagination">
 						<c:if test="${pageMaker.prev}">
 							<li class="paginate_button previous">
-								<a href="${pageMaker.startPage -1}">Previous</a>
+								<a href="${pageMaker.startPage -1}">이전</a>
 							</li>
 						</c:if>
 
@@ -107,13 +114,11 @@
 
 						<c:if test="${pageMaker.next}">
 							<li class="paginate_button next">
-								<a href="${pageMaker.endPage +1 }">Next</a>
+								<a href="${pageMaker.endPage +1 }">다음</a>
 							</li>
-						</c:if>
-						
+						</c:if>						
 					</ul>
 				</div>
-				<!--  end Pagination -->
 			</div>
 
 			<form id='actionForm' action="${pageContext.request.contextPath}/board/list" method='get'>
@@ -123,39 +128,27 @@
 				<input type='hidden' name='keyword'	value='<c:out value="${ pageMaker.cri.keyword }"/>'>
 			</form>
 
-
 			<!-- Modal  추가 -->
 			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-							<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+							<h4 class="modal-title" id="myModalLabel">완료</h4>
 						</div>
 						<div class="modal-body">처리가 완료되었습니다.</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-							<button type="button" class="btn btn-primary">Save changes</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
 						</div>
 					</div>
-					<!-- /.modal-content -->
 				</div>
-				<!-- /.modal-dialog -->
 			</div>
-			<!-- /.modal -->
-
-
 		</div>
-		<!--  end panel-body -->
 	</div>
-	<!-- end panel -->
 </div>
-<!-- /.row -->
-
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		//contextPath를 세션에 저장한다
 		sessionStorage.setItem("contextpath", "${pageContext.request.contextPath}");
 		var result = '<c:out value="${result}"/>';
 		checkModal(result);
@@ -174,6 +167,10 @@
 		
 		//새 글 등록을 클릭했을 때
 		$("#regBtn").on("click", function() {
+			self.location = "${pageContext.request.contextPath}/board/register";
+		});
+		//공지 등록을 클릭했을 때
+		$("#regBtnNotice").on("click", function() {
 			self.location = "${pageContext.request.contextPath}/board/register";
 		});
 		var actionForm = $("#actionForm");
@@ -212,4 +209,5 @@
 	});
 </script>
 
+<!-- 뒤의 내용은 footer에서 이어서 작동한다. -->
 <%@include file="../includes/footer.jsp"%>

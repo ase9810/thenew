@@ -1,20 +1,18 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 
+<!-- 앞의 내용은 header에서 이어서 작동한다. -->
 <%@include file="../includes/header.jsp"%>
-
 
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Board Read</h1>
+		<h1 class="page-header">후기 & 공지</h1>
 	</div>
-	<!-- /.col-lg-12 -->
 </div>
-<!-- /.row -->
 
 <div class='bigPictureWrapper'>
 	<div class='bigPicture'></div>
@@ -69,41 +67,32 @@
 <div class="row">
 	<div class="col-lg-12">
 		<div class="panel panel-default">
-
-			<div class="panel-heading">Board Read Page</div>
-			<!-- /.panel-heading -->
+			<div class="panel-heading">&nbsp;</div>
 			<div class="panel-body">
-
 				<div class="form-group">
-					<label>Bno</label>
+					<label>번호</label>
 					<input class="form-control" name='bno' value='<c:out value="${board.bno}"/>' readonly="readonly">
 				</div>
-
 				<div class="form-group">
-					<label>Title</label>
+					<label>제목</label>
 					<input class="form-control" name='title' value='<c:out value="${board.title}"/>' readonly="readonly">
 				</div>
-
 				<div class="form-group">
-					<label>Text area</label>
-					<textarea class="form-control" rows="3" name='content' readonly="readonly"><c:out value="${board.content}"/></textarea>
-				</div>
-							
+					<label>내용</label>
+					<!-- escapeXml="false"을 사용해서 html 태그를 제거, register.jsp의 textarea에서 작성한 내용의 크기에 따라 보기 위해 div의 height를 auto로 설정 -->
+					<div class="form-control" readonly="readonly" style="height:auto;"><c:out value="${board.content}" escapeXml="false"></c:out></div>
+				</div>					
 				<div class="form-group">
-					<label>Writer</label>
+					<label>작성자</label>
 					<input class="form-control" name='writer' value='<c:out value="${board.writer}"/>' readonly="readonly">
 				</div>
-
-				<!-- <button data-oper='modify' class="btn btn-default">Modify</button> -->
 				<sec:authentication property="principal" var="pinfo"/>
 				<sec:authorize access="isAuthenticated()">
 					<c:if test="${pinfo.username eq board.writer}">
-						<button data-oper='modify' class="btn btn-default">Modify</button>
+						<button data-oper='modify' class="btn btn-default">수정</button>
 					</c:if>
-				</sec:authorize>
-				
-				<button data-oper='list' class="btn btn-info">List</button>
-
+				</sec:authorize>				
+				<button data-oper='list' class="btn btn-info">글 목록</button>
 				<form id='operForm' action="/board/modify" method="get">
 					<input type='hidden' id='bno' name='bno' value='<c:out value="${board.bno}"/>'>
 					<input type='hidden' name='pageNum'	value='<c:out value="${cri.pageNum}"/>'>
@@ -111,50 +100,34 @@
 					<input type='hidden' name='keyword'	value='<c:out value="${cri.keyword}"/>'>
 					<input type='hidden' name='type' value='<c:out value="${cri.type}"/>'>
 				</form>
-				
 			</div>
-			<!--  end panel-body -->
-
 		</div>
-		<!--  end panel-body -->
 	</div>
-	<!-- end panel -->
 </div>
-<!-- /.row -->
 
 <div class="row">
 	<div class="col-lg-12">
 		<div class="panel panel-default">
-			<div class="panel-heading">Files</div>
-      		<!-- /.panel-heading -->
+			<div class="panel-heading">첨부 파일</div>
       		<div class="panel-body">
         		<div class='uploadResult'> 
           			<ul></ul>
         		</div>
       		</div>
-      		<!--  end panel-body -->
     	</div>
-    	<!--  end panel-body -->
   	</div>
-  	<!-- end panel -->
 </div>
-<!-- /.row -->
 
 <!-- 댓글의 추가 버튼 -->
 <div class='row'>
 	<div class="col-lg-12">
     	<!-- /.panel -->
     	<div class="panel panel-default">
-		<!--    <div class="panel-heading">
-        			<i class="fa fa-comments fa-fw"></i> Reply
-      			</div> -->
-      		<div class="panel-heading">
-        		<i class="fa fa-comments fa-fw"></i> Reply
+	  		<div class="panel-heading">
+        		<i class="fa fa-comments fa-fw"></i> 댓글
         		<sec:authorize access="isAuthenticated()">
-        			<button id='addReplyBtn' class='btn btn-primary btn-xs pull-right'>New Reply</button>
         		</sec:authorize>
       		</div>      
-      		<!-- /.panel-heading -->
       		<div class="panel-body">
       			<sec:authentication property="principal" var="pinfo"/>
       			<sec:authorize access="isAuthenticated()">
@@ -163,13 +136,10 @@
       				<input type="button" id="RegisterBtn" value="등록">
       			</sec:authorize>
         		<ul class="chat"></ul>
-        	<!-- ./ end ul -->
       		</div>
-      		<!-- /.panel .chat-panel -->
-			<div class="panel-footer"></div>
+ 			<div class="panel-footer"></div>
 		</div>
 	</div>
-<!-- ./ end row -->
 </div>
 
 <!-- Modal -->
@@ -179,35 +149,31 @@
 		<div class="modal-content">
         	<div class="modal-header">
             	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              	<h4 class="modal-title" id="myModalLabel">REPLY MODAL</h4>
+              	<h4 class="modal-title" id="myModalLabel">댓글 상세보기</h4>
             </div>
             <div class="modal-body">
             	<div class="form-group">
-                	<label>Reply</label> 
+                	<label>댓글 내용</label> 
                 	<input class="form-control" name='reply' value='New Reply!!!!'>
               	</div>
             	<div class="form-group">
-                	<label>Replyer</label> 
+                	<label>작성자</label> 
                 	<input class="form-control" name='replyer' value='replyer'>
               	</div>
               	<div class="form-group">
-                	<label>Reply Date</label> 
+                	<label>작성 일자</label> 
                 	<input class="form-control" name='replyDate' value='2018-01-01 13:13'>
               	</div>
             </div>
 			<div class="modal-footer">
-        		<button id='modalModBtn' type="button" class="btn btn-warning">Modify</button>
-        		<button id='modalRemoveBtn' type="button" class="btn btn-danger">Remove</button>
-        		<button id='modalRegisterBtn' type="button" class="btn btn-primary">Register</button>
-        		<button id='modalCloseBtn' type="button" class="btn btn-default">Close</button>
+        		<button id='modalModBtn' type="button" class="btn btn-warning">수정</button>
+        		<button id='modalRemoveBtn' type="button" class="btn btn-danger">삭제</button>
+        		<button id='modalRegisterBtn' type="button" class="btn btn-primary">작성자</button>
+        		<button id='modalCloseBtn' type="button" class="btn btn-default">닫기</button>
       		</div>
       	</div>
-    	<!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
+    </div>  
 </div>
-<!-- /.modal -->
-
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/reply.js"></script>
 
@@ -216,7 +182,7 @@ $(document).ready(function () {
 	var bnoValue = '<c:out value="${board.bno}"/>';
 	var replyUL = $(".chat");
     showList(1);
-    function showList(page) {
+    function showList(page){
     	console.log("show list " + page);
     	// 해당 게시물의 댓글을 가져오기 위함
     	replyService.getList({bno:bnoValue,page: page|| 1 }, function(replyCnt, list) {
@@ -241,15 +207,15 @@ $(document).ready(function () {
     		// 댓글의 시간을 표시해주는 함수
     		for (var i = 0, len = list.length || 0; i < len; i++) {
     			str +="<li class='left clearfix' data-rno='" + list[i].rno + "'>";
-    			str +="  <div><div class='header'><strong class='primary-font'>[" +list[i].rno+ "] " + list[i].replyer + "</strong>"; 
+    			str +="  <div><div class='header'><strong class='primary-font'>[" + list[i].replyer + "]</strong>"; 
        			str +="    <small class='pull-right text-muted'>" + replyService.displayTime(list[i].updateDate) + "</small></div>";
        			str +="    <p>" +list[i].reply + "</p></div></li>";
      		}
     		
 		    replyUL.html(str);
 		    showReplyPage(replyCnt);
-		});//end function
-	}//end showList
+		});
+	}
     
     var pageNum = 1;
     var replyPageFooter = $(".panel-footer");
@@ -323,17 +289,6 @@ $(document).ready(function () {
     	modal.modal('hide');
     });
     
-    // 입력에 필요한 부분만을 표시하고 그 외의 부분은 모두  숨김처리
-    /* $("#addReplyBtn").on("click", function(e) {
-    	modal.find("input").val("");
-    	modal.find("input[name='replyer']").val(replyer);
-    	modalInputReplyDate.closest("div").hide();
-    	modal.find("button[id !='modalCloseBtn']").hide();
-    	
-    	modalRegisterBtn.show();
-    	$(".modal").modal("show");
-    }); */
-    
     //Ajax spring security header
     $(document).ajaxSend(function(e, xhr, options) { 
         xhr.setRequestHeader(csrfHeaderName, csrfTokenValue); 
@@ -352,18 +307,6 @@ $(document).ready(function () {
     	});
     });
     
-	// 새로운 댓글을 추가하는 부분
-	/*modalRegisterBtn.on("click",function(e) {
-    	var reply = { reply: modalInputReply.val(), replyer:modalInputReplyer.val(), bno:bnoValue };
-    	replyService.add(reply, function(result){
-    		alert(result);
-    		modal.find("input").val("");
-    		modal.modal("hide");
-    		//showList(1);
-    		showList(-1);
-    	});
-    }); */
-
   	//댓글 조회 클릭 이벤트 처리 
     $(".chat").on("click", "li", function(e) {
     	var rno = $(this).data("rno");
@@ -396,7 +339,7 @@ $(document).ready(function () {
    	 	console.log("Original Replyer: " + originalReplyer);
    	 	
    	 	// 로그인한 사용자가 댓글의 작성자가 아닐 경우
-   	  	if(replyer  != originalReplyer) {
+   	  	if(replyer != originalReplyer) {
    		  	alert("자신이 작성한 댓글만 수정이 가능합니다.");
    		  	modal.modal("hide");
    		  	return;
@@ -455,7 +398,10 @@ $(document).ready(function () {
 
 <script>
 	$(document).ready(function() {
-		var contextPath = sessionStorage.getItem("contextpath");
+		//호스트주소에 시작부터 끝까지 인덱스번호를 가져옴.
+		var hostIndex = location.href.indexOf( location.host ) + location.host.length;
+		//'/{contextPath}'를 가져온다
+		var contextPath = location.href.substring(hostIndex, location.href.indexOf('/', hostIndex + 1));
 		
 		(function(){
     		var bno = '<c:out value="${board.bno}"/>';    		
@@ -480,11 +426,9 @@ $(document).ready(function () {
          			}
        			});
       		 	$(".uploadResult ul").html(str);       
-     		});//end getjson
-
-    
-  		})();//end function
-  
+     		});
+  		})();
+		
   		$(".uploadResult").on("click","li", function(e) {
 			console.log("view image");
     		var liObj = $(this);
@@ -513,4 +457,5 @@ $(document).ready(function () {
 	});
 </script>
 
+<!-- 뒤의 내용은 footer에서 이어서 작동한다. -->
 <%@include file="../includes/footer.jsp"%>

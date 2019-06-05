@@ -9,12 +9,26 @@ import lombok.Data;
 public class MemberVO {
 	private String userid;
 	private String userpw;
-	private String userName;
-	private String userPhone;
-	private String userAddress;
+	private String username;
+	private String userphone;
+	private String useremail;
 	private boolean enabled;
 
-	private Date regDate;
-	private Date updateDate;
+	private Date regdate;
+	private Date updatedate;
 	private List<AuthVO> authList;
+
+	// 비밀번호 일치 여부 체크
+	public boolean isCheckedPasswd(String userPasswd) {
+		if (userpw.equals(userPasswd)) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public String toString() {
+		return "MemberCommand " + "[userid=" + userid + ", userpw=" + userpw + ", username=" + username + ", userphone="
+				+ userphone + ", useremail=" + useremail + ", regdate=" + regdate + "]";
+	}
 }

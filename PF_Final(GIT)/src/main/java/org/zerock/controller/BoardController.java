@@ -47,6 +47,8 @@ public class BoardController {
 	// model: 컨트롤러에서 뷰로 전환할 때 데이터를 가지고 있는 객체. 컨트롤러가 뷰로 model 객체를 넘겨 뷰에서 model 객체의 데이터 이용 가능
 	public void list(Criteria cri, Model model) {
 		log.info("list: " + cri);
+		// service에서 리턴된 list값을 noticeList라는 attribute로 만들어 보낸다.
+		model.addAttribute("noticeList", service.getNoticeList(cri));
 		// service에서 리턴된 list값을 list라는 attribute로 만들어 보낸다.
 		model.addAttribute("list", service.getList(cri));
 		// model.addAttribute("pageMaker", new PageDTO(cri, 123));

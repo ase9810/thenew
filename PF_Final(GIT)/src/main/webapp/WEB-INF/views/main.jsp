@@ -123,8 +123,12 @@ p span {
 </div>
 
 <script>
-$('.box').click( function() {
-    $(this).toggleClass('clicked');
+$(document).ready(function() {
+	//contextPath를 세션에 저장한다
+	sessionStorage.setItem("contextpath", "${pageContext.request.contextPath}");
+	$('.box').click( function() {
+    	$(this).toggleClass('clicked');
+	});
 });
 </script>
 
