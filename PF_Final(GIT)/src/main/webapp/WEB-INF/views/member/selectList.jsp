@@ -48,7 +48,7 @@
             </tr>
          </c:forEach>
          	<tr>
-         	<td><a href="clist">기업 회원 보기</a>
+         	<td><a href="/${pageContext.request.contextPath}/company/clist">기업 회원 보기</a>
          	</tr>
       </table>
       <table>
