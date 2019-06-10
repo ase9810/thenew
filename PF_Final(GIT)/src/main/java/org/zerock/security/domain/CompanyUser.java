@@ -6,31 +6,31 @@ import java.util.stream.Collectors;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
-import org.zerock.domain.MemberVO;
+import org.zerock.domain.CompanyVO;
 
 import lombok.Getter;
 
 @Getter
-public class CustomUser extends User {
+public class CompanyUser extends User {
 
 	private static final long serialVersionUID = 1L;
 
-	private MemberVO member;
+	private CompanyVO company;
 
-	private String name;
-	private String phone;
+	private String compname;
+	private String compphone;
 	
-	public CustomUser(String username, String password, Collection<? extends GrantedAuthority> authorities) {
+	public CompanyUser(String username, String password, Collection<? extends GrantedAuthority> authorities) {
 		super(username, password, authorities);
 	}
 
-	public CustomUser(MemberVO vo) {
+	public CompanyUser(CompanyVO vo) {
 
-		super(vo.getUserid(), vo.getUserpw(), vo.getAuthList().stream()
+		super(vo.getCompid(), vo.getComppw(), vo.getAuthList().stream()
 				.map(auth -> new SimpleGrantedAuthority(auth.getAuth())).collect(Collectors.toList()));
 
-		this.member = vo;
-		this.name = vo.getUsername();
-		this.phone = vo.getUserphone();
+		this.company = vo;
+		this.compname = vo.getCompname();
+		this.compphone = vo.getCompphone();
 	}
 }

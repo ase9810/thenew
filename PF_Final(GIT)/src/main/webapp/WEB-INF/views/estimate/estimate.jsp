@@ -75,23 +75,22 @@
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script charset="UTF-8" type="text/javascript" src="http://t1.daumcdn.net/postcode/api/core/190515/1557895495730/190515.js"></script>
 
-<form role="form" action="/estimate/estimate" method="post">
+<form role="form" action="${pageContext.request.contextPath}/estimate/estimate" method="post">
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">●개인정보</div>
 				<div class="panel-body">				
-					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 					<div class="form-group">
 						<label>*신청인</label>
-						<input name="name" type="text" size="18" value="">
+						<input name="name" type="text" size="18" value="<sec:authentication property="principal.name"/>">
 		                 &nbsp;&nbsp;(실명을 적어주세요)
 					</div>
 					<div class="form-group">
 						<label>*휴대폰</label>
 						<input name="phone" type="text" size="18" style="ime-mode:disabled"
-	                  onkeypress="onlyNumber()" maxlength="12" onkeyup=""placeholder="ex)01012345678">
+	                  onkeypress="onlyNumber()" maxlength="12" onkeyup=""placeholder="ex)01012345678" value="<sec:authentication property="principal.phone"/>">
 	                   &nbsp;&nbsp;("-" 없이 적어주세요)
 					</div>
 				</div>

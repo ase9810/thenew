@@ -18,13 +18,13 @@ public class CompanyValidator implements Validator {
 	@Override
 	public void validate(Object target, Errors errors) {
 
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "compid", "required");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "comppw", "required");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "compname", "required");		
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "compdate", "required");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "compcontent", "required");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "compphone", "required");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "compdomain", "required");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "compid", "required.companyVO.compid");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "comppw", "required.companyVO.comppw");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "compname", "required.companyVO.compname");		
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "compdate", "required.companyVO.compdate");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "compcontent", "required.companyVO.compcontent");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "compphone", "required.companyVO.compphone");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "compdomain", "required.companyVO.compdomain");
 	}
 
 }

@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -101,9 +102,11 @@ public class CompanyController {
 		if (result.hasErrors()) {
 			return form();
 		}
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		companyVO.setComppw(encoder.encode(companyVO.getComppw()));
 		companyService.insertCompany(companyVO);
 
-		return "redirect:/company/clist";
+		return "redirect:/company/cdetail?compid=" + companyVO.getCompid();
 	}
 
 	// selectDetail.do에서 compid값 넘김
@@ -123,12 +126,13 @@ public class CompanyController {
 			System.out.println(result);
 			return "company/cupdateForm";
 		}
-
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		companyVO.setComppw(encoder.encode(companyVO.getComppw()));
 		companyService.updateCompany(companyVO);
 		// session에 저장된 model을 삭제하는 이벤트 발생
 		status.setComplete();
 
-		return "redirect:/company/clist";
+		return "redirect:/company/cdetail?compid=" + companyVO.getCompid();
 	}
 
 	@GetMapping("/cdelete")
@@ -139,6 +143,6 @@ public class CompanyController {
 	@GetMapping("/cdeletePro")
 	public String deleteprocess(@RequestParam("compid") String compid) {
 		companyService.deleteCompany(compid);
-		return "redirect:/company/clist";
+		return "redirect:/";
 	}
 }

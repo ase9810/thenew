@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -100,6 +101,8 @@ public class MemberController {
 		if (result.hasErrors()) {
 			return form();
 		}
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		memberVO.setUserpw(encoder.encode(memberVO.getUserpw()));
 		memberService.insertMember(memberVO);
 		return "redirect:/member/list";
 	}
@@ -119,6 +122,8 @@ public class MemberController {
 		if (result.hasErrors()) {
 			return "member/updateForm";
 		}
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		memberVO.setUserpw(encoder.encode(memberVO.getUserpw()));
 		memberService.updateMember(memberVO);
 		// session에 저장된 model을 삭제하는 이벤트 발생
 		status.setComplete();

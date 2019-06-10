@@ -1,6 +1,7 @@
 package org.zerock.domain;
 
 import java.sql.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -9,12 +10,14 @@ public class CompanyVO {
 	private String compid;
 	private String comppw;
 	private String compname;
-	private String compdate;
+	private Date compdate;
 	private String compcontent;
 	private String compphone;
 	private String compdomain;
 	private Date regdate;
 
+	private List<CompanyAuthVO> authList;
+	
 	// 비밀번호 일치 여부 체크
 	public boolean isCheckedPasswd(String comppw) {
 		if (comppw.equals(comppw)) {

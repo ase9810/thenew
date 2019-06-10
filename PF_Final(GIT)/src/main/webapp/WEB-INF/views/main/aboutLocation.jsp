@@ -5,25 +5,27 @@
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 <style>
+#locationWarp{
+width: auto;
+height: auto;
+padding: 20px;
+}
 #map {
 width: 600px;
 height: 500px;
-position: absolute;
-	top: 50%;
-	left: 60%;
-	transform: translate(-50%, -50%);
+margin-top : 150px;
 border: 1px solid black;
+padding: 20px;
 }
 
 #locationInfo {
 width: 620px;
 height: 650px;
-position: absolute;
-	top: 50%;
-	left: 25%;
-	transform: translate(-50%, -50%);
+margin-top : 50px;
 border-left: 1px solid black;
+float: left;
 }
+
 #locationInfo h1 {
 text-align: center;
 font-weight: bold;
@@ -39,37 +41,36 @@ font-size: 18px;
 }
 
 </style>
-
-<div id="locationInfo">
-<h1>오시는 길</h1><hr>
-<ul>
-<li><b>주소</b> : 서울시 마포구 신촌로 176 중앙빌딩 5층 <i class="fas fa-building"></i><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(대흥동 12-20 중앙빌딩 5층)<br><br></li>
-<li><b>교통</b> :
-<ul>
-<li><i class="fas fa-bus"></i>&nbsp;버스 :<br>
-*이대역 정류장<br>
-간선 - 171, 172, 270, 271, 273, 472, 602, 603, 721, 751, N26, N62<br>
-지선 - 7011, 7017, 7611<br>
-직행 - 1004<br>
-광역 - 1000, 1100, 1101, 1200, 1300, 1301, 1302, 1400, 1500, 1601, 1800<br>
-공항 - 6002<br><br>
-*이대전철역 정류장<br>
-마을 - 마포07, 서대문05<br><br>
-*이화여대입구 정류장<br>
-간선 - 173<br>
-지선 - 5714<br>
-지선 - 6712<br>
-직행 - G6000<br><br>
-</li>
-<li><i class="fas fa-subway"></i>&nbsp;지하철 : 2호선 이대역 6번출구 신촌방향 10m 전방 중앙빌딩 5층 <br><br></li>
-</ul>
-</li>
-<li><b>주차안내</b> : 건물내 유료 주차장 이용이 가능합니다.
-</li>
-</ul>
+<div id="locationWarp">
+	<div id="locationInfo">
+		<h1>오시는 길</h1>
+		<hr>
+		<ul>
+			<li><b>주소</b> : 서울시 마포구 신촌로 176 중앙빌딩 5층 <i
+				class="fas fa-building"></i><br>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(대흥동
+				12-20 중앙빌딩 5층)<br>
+			<br></li>
+			<li><b>교통</b> :
+				<ul>
+					<li><i class="fas fa-bus"></i>&nbsp;버스 :<br> *이대역 정류장<br>
+						간선 - 171, 172, 270, 271, 273, 472, 602, 603, 721, 751, N26, N62<br>
+						지선 - 7011, 7017, 7611<br> 직행 - 1004<br> 광역 - 1000, 1100,
+						1101, 1200, 1300, 1301, 1302, 1400, 1500, 1601, 1800<br> 공항 -
+						6002<br>
+					<br> *이대전철역 정류장<br> 마을 - 마포07, 서대문05<br>
+					<br> *이화여대입구 정류장<br> 간선 - 173<br> 지선 - 5714<br>
+						지선 - 6712<br> 직행 - G6000<br>
+					<br></li>
+					<li><i class="fas fa-subway"></i>&nbsp;지하철 : 2호선 이대역 6번출구 신촌방향
+						10m 전방 중앙빌딩 5층 <br>
+					<br></li>
+				</ul></li>
+			<li><b>주차안내</b> : 건물내 유료 주차장 이용이 가능합니다.</li>
+		</ul>
+	</div>
+	<div id="map"></div>
 </div>
-<div id="map"></div>
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c64d94edcda8e1c9581122021c00a9d3&libraries=services"></script>
 <script>

@@ -115,21 +115,22 @@
 					<label>요구 사항</label>
 					<textarea class="form-control" rows="3" name='content' readonly="readonly"><c:out value="${estimate.content}"/></textarea>
 				</div>
-				</div>
-				</div>
-				</div>
+				<!-- <button data-oper='modify' class="btn btn-default">Modify</button> -->
+ 				<sec:authentication property="principal" var="pinfo"/>
+				<sec:authorize access="isAuthenticated()">
+ 					<c:if test="${pinfo.name eq estimate.name}">
+						<button data-oper='modify' class="btn btn-default">Modify</button>
+ 					</c:if>
+ 				</sec:authorize>
+				
+				<button data-oper='list' class="btn btn-info">List</button>
+			</div>
+		</div>
+	</div>
 				
 							
 
-				<!-- <button data-oper='modify' class="btn btn-default">Modify</button> -->
-<%-- 				<sec:authentication property="principal" var="pinfo"/> --%>
-<%-- 				<sec:authorize access="isAuthenticated()"> --%>
-<%-- 					<c:if test="${pinfo.username eq board.writer}"> --%>
-						<button data-oper='modify' class="btn btn-default">Modify</button>
-<%-- 					</c:if> --%>
-<%-- 				</sec:authorize> --%>
 				
-				<button data-oper='list' class="btn btn-info">List</button>
 
 				<form id='operForm' action="/estimate/modify" method="get">
 					<input type='hidden' id='eno' name='eno' value='<c:out value="${estimate.eno}"/>'>
@@ -177,9 +178,9 @@
       			</div> -->
       		<div class="panel-heading">
         		<i class="fa fa-comments fa-fw"></i> Reply
-<%--         		<sec:authorize access="isAuthenticated()"> --%>
+     			<sec:authorize access="hasRole('ROLE_COMPANY')">
         			<button id='addReplyBtn' class='btn btn-primary btn-xs pull-right'>New reply</button>
-<%--         		</sec:authorize> --%>
+     			</sec:authorize>
       		</div>      
       		<!-- /.panel-heading -->
       		<div class="panel-body">
@@ -202,6 +203,7 @@
 
 <!-- Modal -->
 <!-- 댓글의 추가를 Modal을 이용해서 추가 -->
+
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -212,11 +214,11 @@
             <div class="modal-body">
             	<div class="form-group">
                 	<label>기업이름</label> 
-                	<input class="form-control" name='compname' value='compname'>
+                	<input class="form-control" name='compname' readonly value='<sec:authorize access="hasRole('ROLE_COMPANY')"><sec:authentication property="principal.compname"/></sec:authorize>'>
               	</div>
             	<div class="form-group">
-                	<label>기업번호</label> 
-                	<input class="form-control" name='compphone' value='compphone'>
+                	<label>기업전화번호</label> 
+                	<input class="form-control" name='compphone' readonly value='<sec:authorize access="hasRole('ROLE_COMPANY')"><sec:authentication property="principal.compphone"/></sec:authorize>'>
               	</div>
             	<div class="form-group">
                 	<label>금액</label> 
@@ -228,7 +230,7 @@
               	</div>
             	<div class="form-group">
                 	<label>Replyer</label> 
-                	<input class="form-control" name='replyer' value='replyer'>
+                	<input class="form-control" name='replyer' value='replyer' readonly>
               	</div>
               	<div class="form-group">
                 	<label>Reply Date</label> 
@@ -274,6 +276,7 @@ $(document).ready(function () {
     		var str="";
     		
     		if(list == null || list.length == 0) {
+    			replyUL.html(str);
     			return;
     		}
     		
@@ -354,10 +357,10 @@ $(document).ready(function () {
     
 	var replyer = null;
     
-//     <sec:authorize access="isAuthenticated()">
-//     	//현재 로그인한 사용자
-//     	replyer = '<sec:authentication property="principal.username"/>';   
-// 	</sec:authorize>
+    <sec:authorize access="isAuthenticated()">
+     	//현재 로그인한 사용자
+     	replyer = '<sec:authentication property="principal.username"/>';   
+ 	</sec:authorize>
 	
 	var csrfHeaderName ="${_csrf.headerName}"; 
     var csrfTokenValue="${_csrf.token}";
@@ -368,7 +371,8 @@ $(document).ready(function () {
     
     // 입력에 필요한 부분만을 표시하고 그 외의 부분은 모두  숨김처리
      $("#addReplyBtn").on("click", function(e) {
-    	modal.find("input").val("");
+    	modal.find("input[name='reply']").val("");
+    	modal.find("input[name='price']").val("");
     	modal.find("input[name='replyer']").val(replyer);
     	modalInputReplyDate.closest("div").hide();
     	modal.find("button[id !='modalCloseBtn']").hide();

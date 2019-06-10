@@ -18,11 +18,11 @@ public class MemberValidator implements Validator {
 	@Override
 	public void validate(Object target, Errors errors) {
 
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userid", "required");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userpw", "required");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "required");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userphone", "required");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "useremail", "required");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userid", "required.memberVO.userid");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userpw", "required.memberVO.userpw");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "required.memberVO.username");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userphone", "required.memberVO.userphone");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "useremail", "required.memberVO.useremail");
 	}
 
 }

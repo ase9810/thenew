@@ -106,12 +106,21 @@
 				</li>
 				<!-- /.dropdown -->
 				<li class="dropdown">
-					<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+					<a href="${pageContext.request.contextPath}/estimate/estimatelist">
 						견적게시판
 					</a>
 				<!-- /.dropdown-tasks -->
 				</li>
 				<!-- /.dropdown -->
+				
+				<li class="dropdown">
+					<a href="${pageContext.request.contextPath}/companySearch/list">
+						업체검색
+					</a>
+				<!-- /.dropdown-tasks -->
+				</li>
+				<!-- /.dropdown -->
+				
 				<li class="dropdown">
 					<a href="${pageContext.request.contextPath}/board/list">
 						후기게시판
@@ -119,24 +128,54 @@
 				<!-- /.dropdown-alerts -->
 				</li>
 				<!-- /.dropdown -->
+				
 				<li class="dropdown">
 					<a class="dropdown-toggle" data-toggle="dropdown" href="#">
-						<i class="fa fa-user fa-fw"></i>
+						<i class="fa fa-edit fa-fw"></i>
 						<i class="fa fa-caret-down"></i>
 					</a>
 					<ul class="dropdown-menu dropdown-user">
 						<sec:authorize access="isAuthenticated()">
 							<li>
 								<a href="${pageContext.request.contextPath}/customLogout">
-									<i class="fa fa-sign-out fa-fw"></i> Logout
+									<i class="fa fa-sign-out fa-fw"></i> 로그아웃
 								</a>
 							</li>
 						</sec:authorize>
-		
+						
+						<sec:authorize access="hasRole('ROLE_USER')">
+							<li>
+								<a href="${pageContext.request.contextPath}/member/detail?userid=<sec:authentication property="principal.username"/>">
+									<i class="fa fa-user fa-fw"></i> 회원정보
+								</a>
+							</li>
+						</sec:authorize>
+						
+						<sec:authorize access="hasRole('ROLE_COMPANY')">
+							<li>
+								<a href="${pageContext.request.contextPath}/company/cdetail?compid=<sec:authentication property="principal.username"/>">
+									<i class="fa fa-building fa-fw"></i> 기업회원정보
+								</a>
+							</li>
+						</sec:authorize>
+						
+						<sec:authorize access="hasRole('ROLE_ADMIN')">
+							<li>
+								<a href="${pageContext.request.contextPath}/member/list">
+									<i class="fa fa-users fa-fw"></i> 회원관리
+								</a>
+							</li>
+						</sec:authorize>
+						
 						<sec:authorize access="isAnonymous()">
 							<li>
 								<a href="${pageContext.request.contextPath}/customLogin">
-									<i class="fa fa-sign-out fa-fw"></i> Login
+									<i class="fa fa-sign-in fa-fw"></i> 로그인
+								</a>
+							</li>
+							<li>
+								<a href="${pageContext.request.contextPath}/member/insert">
+									<i class="fa fa-user-plus fa-fw"></i> 회원가입
 								</a>
 							</li>
 						</sec:authorize>

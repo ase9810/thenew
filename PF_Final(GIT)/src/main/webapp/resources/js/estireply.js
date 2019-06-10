@@ -49,7 +49,7 @@ var replyService = (function() {
 		    
 	    $.ajax({
 	    	type : 'delete',
-	    	url : '/estimate/replies/' + rno,
+	    	url : contextPath + '/estimate/replies/' + rno,
 	    	data:  JSON.stringify({rno:rno, replyer:replyer}),
 	    	contentType: "application/json; charset=utf-8",
 	    	success : function(deleteResult, status, xhr) {

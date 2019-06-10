@@ -65,6 +65,11 @@
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 						</form>
 					</div>
+					<div class="panel-footer">
+					<a href="${pageContext.request.contextPath}/member/insert">
+						<button type="button" class="btn btn-xs btn-block">회원 가입</button>
+					</a>
+				</div>
 				</div>
 			</div>
 		</div>

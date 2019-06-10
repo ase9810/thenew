@@ -4,10 +4,42 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.zerock.mapper.CompanyMapper">  <!-- 매핑되는 것을 명시해야함. -->
 
+	<resultMap type="org.zerock.domain.CompanyVO" id="companyMap">
+		<id property="compid" column="compid" />
+		<result property="compid" column="compid" />
+		<result property="comppw" column="comppw" />
+		<result property="compname" column="compname" />
+		<result property="compdate" column="compdate" />
+		<result property="compcontent" column="compcontent" />
+		<result property="compphone" column="compphone" />
+		<result property="compdomain" column="compdomain" />
+		<result property="regdate" column="regdate" />
+		<collection property="authList" resultMap="authMap">
+		</collection>
+	</resultMap>
+
+	<resultMap type="org.zerock.domain.CompanyAuthVO" id="authMap">
+		<result property="compid" column="compid" />
+		<result property="auth" column="auth" />
+	</resultMap>
+
+	<select id="read" resultMap="companyMap">
+		SELECT
+		com.compid, comppw, compname,
+		compphone, compdate, compdomain,
+		compcontent, regdate, auth
+		FROM
+		tbl_company com LEFT OUTER JOIN
+		tbl_company_auth auth on com.compid = auth.compid
+		WHERE com.compid =
+		#{compid}
+	</select>
+	
+
 	<!-- 목록을 처리_ 메서드 이름이 아이디 -->
 	<!-- 매핑할 메소드 이름을 써주어야함 넘긴 타입(꼭 map 아니어도됨.자바빈도 가능) 결과값 담은 자바빈 -->
 	<select id="getCompanyList" parameterType="map"
-		resultType="org.zerock.domain.CompanyVO">
+		resultMap="companyMap">
 		<!-- 페이징 하려면 전달할 데이터(파라미터 값)를 맵에 담아서 보내야 한다. 아니면 자바빈에 담아서 보내야함. (보낼때는 맵 
 			반환할때는 자바빈) -->
 		<!-- 자바빈은 자동스켄 해서 마이바티스에 자동 등록된다. 식별자가 소문자로 등록이 된다(별칭, 알리아스). 호출할때는 소문자로 
@@ -39,14 +71,18 @@
 
 	<insert id="insertCompany"
 		parameterType="org.zerock.domain.CompanyVO">
-		INSERT INTO tbl_company
+		INSERT ALL 
+		INTO tbl_company
 		(compid,comppw,compname,compdate,compcontent,compphone,compdomain,regdate)
 		VALUES
 		(#{compid},#{comppw},#{compname},#{compdate},#{compcontent},#{compphone},#{compdomain},sysdate)
+		INTO tbl_company_auth(compid,auth)
+		VALUES (#{compid},'ROLE_COMPANY')
+		SELECT * FROM DUAL
 	</insert>
 
 	<select id="getCompany" parameterType="string"
-		resultType="org.zerock.domain.CompanyVO">
+		resultMap="companyMap">
 		SELECT * FROM tbl_company WHERE compid=#{compid}
 	</select>
 

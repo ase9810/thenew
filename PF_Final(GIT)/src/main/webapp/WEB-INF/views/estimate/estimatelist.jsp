@@ -20,7 +20,7 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				Board List Page
-				<sec:authorize access="isAuthenticated()">
+				<sec:authorize access="hasAnyRole('ROLE_USER','ROLE_ADMIN')">
 					<button id='regBtn' type="button" class="btn btn-xs pull-right">이사견적신청서</button>
 				</sec:authorize>
 				<sec:authorize access="isAnonymous()">
@@ -51,7 +51,6 @@
 
 							<td><a class='move' href='<c:out value="${estimate.eno}"/>'>
 									<c:out value="${estimate.title}" />
-									<b>[<c:out value="${estimate.replyCnt}"/>]</b>
 							</a></td>
 							<td><c:out value="${estimate.move}" /></td>
 							<td><c:out value="${estimate.name}" /></td>

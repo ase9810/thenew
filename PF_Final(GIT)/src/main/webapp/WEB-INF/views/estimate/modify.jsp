@@ -108,13 +108,13 @@
 						</div>
 					</div>
 
-					<%-- <sec:authentication property="principal" var="pinfo"/> --%>
-<%-- 					<sec:authorize access="isAuthenticated()"> --%>
-<%-- 						<c:if test="${pinfo.username eq estimate.writer}"> --%>
+					<sec:authentication property="principal" var="pinfo"/>
+ 					<sec:authorize access="isAuthenticated()">
+ 						<c:if test="${pinfo.name eq estimate.name}">
 							<button type="submit" data-oper='modify' class="btn btn-default">수정하기</button>
 							<button type="submit" data-oper='remove' class="btn btn-danger">삭제하기</button>
-<%-- 						</c:if> --%>
-<%-- 					</sec:authorize> --%>
+ 						</c:if>
+ 					</sec:authorize>
 					
 					<button type="submit" data-oper='estimatelist' class="btn btn-info">목록</button>
 				</form>

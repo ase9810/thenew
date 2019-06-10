@@ -9,6 +9,8 @@ import org.zerock.domain.CompanyVO;
 @Repository("companyMapper")
 public interface CompanyMapper {
 
+	public CompanyVO read(String compid);
+	
 	public List<CompanyVO> getCompanyList(Map<String, Object> map);
 
 	public int getCompanyCount();
