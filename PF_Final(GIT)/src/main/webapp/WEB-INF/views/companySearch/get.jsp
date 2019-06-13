@@ -7,7 +7,7 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Company Read</h1>	
+		<h1 class="page-header">기업 상세 정보</h1>	
 	</div>
 </div>
 
@@ -15,45 +15,45 @@
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 			
-			<div class="panel-heading">Company Read Page</div>
+			<div class="panel-heading">기업 정보 페이지</div>
 			<div class="panel-body">
 			
 								
 					<div class="form-group">
-						<label>Company Name</label>
+						<label>기업 이름</label>
 						<input class="form-control" name='CompName' value='${company.compName }' readonly="readonly">
 					</div>
 			
 			
 					<div class="form-group">
-						<label>Company ID</label>
+						<label>기업 ID</label>
 						<input class="form-control" name='CompId' value='<c:out value="${company.compId }"/>' readonly="readonly">
 					</div>
 					
 				
 					
 					<div class="form-group">
-							<label>Company Domain</label>
+							<label>기업 도메인</label>
 							<input class="form-control" name='CompDomain' value='<c:out value="${company.compDomain }"/>' readonly="readonly">
 					</div>
 					
 					<div class="form-group">
-							<label>Company Phone</label>
+							<label>기업 전화번호</label>
 							<input class="form-control" name='CompPhone' value='<c:out value="${company.compPhone }"/>' readonly="readonly">
 					</div>
 					
 					<div class="form-group">
-						<label>Company Content</label>
+						<label>기업 업종</label>
 						<textarea class="form-control" rows="3" name='CompContent' readonly="readonly"><c:out value="${company.compContent}" /></textarea>
 					</div>
 					
 					<div class="form-group">
-							<label>Company Date</label>
+							<label>기업 설립일</label>
 							<input class="form-control" name='CompDate' value='<c:out value="${company.compDate }"/>' readonly="readonly">
 					</div>
 				
 					
-					<button data-oper='list' class="btn btn-info" onclick="location.href='${pageContext.request.contextPath}/companySearch/list'">List</button>
+					<button data-oper='list' class="btn btn-info" onclick="location.href='${pageContext.request.contextPath}/companySearch/list'">목록</button>
 					<form id='operForm' action="/companySearch/list" method="get">
 						<input type='hidden' id='compId' name='compName' value='<c:out value="${company.compId }"/>'>
 						<input type='hidden'  name='pageNum' value='<c:out value="${cri.pageNum }"/>'>

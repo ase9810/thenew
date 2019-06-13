@@ -75,7 +75,7 @@
 						</c:if>
 					</sec:authorize>
 					
-					<button type="submit" data-oper='list' class="btn btn-info">글 목록</button>
+					<button type="submit" data-oper='list' class="btn btn-info">목록</button>
 				</form>
 			</div>
 		</div>

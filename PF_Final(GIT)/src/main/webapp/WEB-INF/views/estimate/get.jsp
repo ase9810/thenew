@@ -119,11 +119,11 @@
  				<sec:authentication property="principal" var="pinfo"/>
 				<sec:authorize access="isAuthenticated()">
  					<c:if test="${pinfo.name eq estimate.name}">
-						<button data-oper='modify' class="btn btn-default">Modify</button>
+						<button data-oper='modify' class="btn btn-default">수정</button>
  					</c:if>
  				</sec:authorize>
 				
-				<button data-oper='list' class="btn btn-info">List</button>
+				<button data-oper='list' class="btn btn-info">목록</button>
 			</div>
 		</div>
 	</div>
@@ -177,9 +177,9 @@
         			<i class="fa fa-comments fa-fw"></i> Reply
       			</div> -->
       		<div class="panel-heading">
-        		<i class="fa fa-comments fa-fw"></i> Reply
+        		<i class="fa fa-comments fa-fw"></i> 견적서
      			<sec:authorize access="hasRole('ROLE_COMPANY')">
-        			<button id='addReplyBtn' class='btn btn-primary btn-xs pull-right'>New reply</button>
+        			<button id='addReplyBtn' class='btn btn-primary btn-xs pull-right'>새 견적서 등록</button>
      			</sec:authorize>
       		</div>      
       		<!-- /.panel-heading -->
@@ -209,15 +209,15 @@
 		<div class="modal-content">
         	<div class="modal-header">
             	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              	<h4 class="modal-title" id="myModalLabel">REPLY MODAL</h4>
+              	<h4 class="modal-title" id="myModalLabel">견적서 등록</h4>
             </div>
             <div class="modal-body">
             	<div class="form-group">
-                	<label>기업이름</label> 
+                	<label>기업 이름</label> 
                 	<input class="form-control" name='compname' readonly value='<sec:authorize access="hasRole('ROLE_COMPANY')"><sec:authentication property="principal.compname"/></sec:authorize>'>
               	</div>
             	<div class="form-group">
-                	<label>기업전화번호</label> 
+                	<label>기업 전화번호</label> 
                 	<input class="form-control" name='compphone' readonly value='<sec:authorize access="hasRole('ROLE_COMPANY')"><sec:authentication property="principal.compphone"/></sec:authorize>'>
               	</div>
             	<div class="form-group">
@@ -225,15 +225,15 @@
                 	<input class="form-control" name='price' value='price'>
               	</div>
             	<div class="form-group">
-                	<label>Reply</label> 
+                	<label>기타 사항</label> 
                 	<input class="form-control" name='reply' value='New Reply!!!!'>
               	</div>
             	<div class="form-group">
-                	<label>Replyer</label> 
+                	<label>기업 ID</label> 
                 	<input class="form-control" name='replyer' value='replyer' readonly>
               	</div>
               	<div class="form-group">
-                	<label>Reply Date</label> 
+                	<label>등록일자</label> 
                 	<input class="form-control" name='replyDate' value='2018-01-01 13:13'>
               	</div>
             </div>

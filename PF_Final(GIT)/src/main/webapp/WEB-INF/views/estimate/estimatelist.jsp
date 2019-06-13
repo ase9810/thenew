@@ -19,13 +19,13 @@
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				Board List Page
+				견적 리스트 페이지
 				<sec:authorize access="hasAnyRole('ROLE_USER','ROLE_ADMIN')">
-					<button id='regBtn' type="button" class="btn btn-xs pull-right">이사견적신청서</button>
+					<button id='regBtn' type="button" class="btn btn-xs pull-right">이사 견적 신청서</button>
 				</sec:authorize>
 				<sec:authorize access="isAnonymous()">
 					<button onclick='self.location = "${pageContext.request.contextPath}/customLogin"'
-					class="btn btn-xs pull-right">이사견적신청서</button>
+					class="btn btn-xs pull-right">이사 견적 신청서</button>
 				</sec:authorize>
 			</div>
 
@@ -86,7 +86,7 @@
 							<input type='text' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>' />
 							<input type='hidden' name='pageNum'	value='<c:out value="${pageMaker.cri.pageNum}"/>' />
 							<input type='hidden' name='amount' value='<c:out value="${pageMaker.cri.amount}"/>' />
-							<button class='btn btn-default'>Search</button>
+							<button class='btn btn-default'>검색</button>
 						</form>
 					</div>
 				</div>
@@ -96,7 +96,7 @@
 					<ul class="pagination">
 						<c:if test="${pageMaker.prev}">
 							<li class="paginate_button previous">
-								<a href="${pageMaker.startPage -1}">Previous</a>
+								<a href="${pageMaker.startPage -1}">이전</a>
 							</li>
 						</c:if>
 
@@ -109,7 +109,7 @@
 
 						<c:if test="${pageMaker.next}">
 							<li class="paginate_button next">
-								<a href="${pageMaker.endPage +1 }">Next</a>
+								<a href="${pageMaker.endPage +1 }">다음</a>
 							</li>
 						</c:if>
 						

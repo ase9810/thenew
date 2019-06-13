@@ -19,7 +19,7 @@
 <div class="row">
 	<div class="col-lg-12">
 		<div class="panel panel-default">
-			<div class="panel-heading">estimate Modify</div>
+			<div class="panel-heading">견적 신청서 수정</div>
 			<!-- /.panel-heading -->
 			<div class="panel-body">
 				<form role="form" action="${pageContext.request.contextPath}/estimate/modify" method="post">
@@ -97,12 +97,12 @@
 
 
 					<div class="form-group">
-						<label>depDate</label>
+						<label>이사시작일</label>
 						<input class="form-control" type="date" name='depDate' value='${estimate.depDate}'/>
 					</div>
 
 					<div class="form-group">
-						<label>Update Date</label>
+						<label>수정날짜</label>
 						<div class="form-control" readonly="readonly">
 							<fmt:formatDate pattern = "yyyy/MM/dd" value = "${estimate.updateDate}" />
 						</div>
@@ -111,8 +111,8 @@
 					<sec:authentication property="principal" var="pinfo"/>
  					<sec:authorize access="isAuthenticated()">
  						<c:if test="${pinfo.name eq estimate.name}">
-							<button type="submit" data-oper='modify' class="btn btn-default">수정하기</button>
-							<button type="submit" data-oper='remove' class="btn btn-danger">삭제하기</button>
+							<button type="submit" data-oper='modify' class="btn btn-default">수정</button>
+							<button type="submit" data-oper='remove' class="btn btn-danger">삭제</button>
  						</c:if>
  					</sec:authorize>
 					

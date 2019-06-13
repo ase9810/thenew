@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -141,8 +142,9 @@ public class CompanyController {
 	}
 
 	@GetMapping("/cdeletePro")
-	public String deleteprocess(@RequestParam("compid") String compid) {
+	public String deleteprocess(@RequestParam("compid") String compid, HttpSession session) {
 		companyService.deleteCompany(compid);
+		session.invalidate();
 		return "redirect:/";
 	}
 }

@@ -100,7 +100,7 @@
 						<label>작성자</label>
 						<input class="form-control" name='writer' value='<sec:authentication property="principal.username"/>' readonly="readonly">
 					</div>			
-					<button type="submit" class="btn btn-default">작성 완료</button>
+					<button type="submit" class="btn btn-default">저장</button>
 					<button type="reset" class="btn btn-default">다시 작성</button>
 				</form>
 			</div>

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -19,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
-
 import org.zerock.domain.MemberVO;
 import org.zerock.service.MemberService;
 import org.zerock.util.PagingUtil;
@@ -104,7 +104,7 @@ public class MemberController {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		memberVO.setUserpw(encoder.encode(memberVO.getUserpw()));
 		memberService.insertMember(memberVO);
-		return "redirect:/member/list";
+		return "redirect:/";
 	}
 
 	// selectDetail.do에서 userid값 넘김
@@ -127,7 +127,7 @@ public class MemberController {
 		memberService.updateMember(memberVO);
 		// session에 저장된 model을 삭제하는 이벤트 발생
 		status.setComplete();
-		return "redirect:/member/list";
+		return "redirect:/";
 	}
 
 	@GetMapping("/delete")
@@ -135,9 +135,9 @@ public class MemberController {
 		return "member/deleteForm";
 	}
 
-	@GetMapping("/deletePro")
-	public String deleteprocess(@RequestParam("userid") String userid) {
+	@PostMapping("/deletePro")
+	public String deleteprocess(@RequestParam("userid") String userid, HttpSession session) {
 		memberService.deleteMember(userid);
-		return "redirect:/member/list";
+		return "redirect:/customLogout";
 	}
 }

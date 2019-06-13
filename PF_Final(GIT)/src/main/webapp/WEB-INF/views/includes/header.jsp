@@ -137,9 +137,12 @@
 					<ul class="dropdown-menu dropdown-user">
 						<sec:authorize access="isAuthenticated()">
 							<li>
-								<a href="${pageContext.request.contextPath}/customLogout">
-									<i class="fa fa-sign-out fa-fw"></i> 로그아웃
-								</a>
+								<form role="form" method='post' action="${pageContext.request.contextPath}/customLogout">
+									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+									<a href="#" class="sub">
+										<i class="fa fa-sign-out fa-fw"></i> 로그아웃
+									</a>
+								</form>
 							</li>
 						</sec:authorize>
 						
@@ -189,4 +192,16 @@
 		</nav>
 	</div>
 		<div id="page-wrapper">
+		
+	
 			<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+			
+	<script>
+		$(".sub").on("click", function(e) {
+			var a = confirm("로그아웃 하시겠습니까?");
+			if(a == true) {
+				e.preventDefault();
+				$("form").submit();
+			}
+		});
+	</script>

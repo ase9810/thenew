@@ -8,7 +8,7 @@
 
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Company List</h1>
+                    <h1 class="page-header">기업 리스트</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -16,17 +16,17 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
-                        <div class="panel-heading">Company List Page</div>
+                        <div class="panel-heading">기업 검색 페이지</div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                             <table class="table table-striped table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                    	<th>Company Name</th>
-                                        <th>Company ID</th>                                     
-                                        <th>Company Domain</th>
-                                        <th>Company Content</th>
-                                        <th>RegDate</th>
+                                    	<th>기업 이름</th>
+                                        <th>기업 ID</th>                                     
+                                        <th>기업 도메인</th>
+                                        <th>기업 업종</th>
+                                        <th>등록일자</th>
                                         
                                     </tr>
                                 </thead>
@@ -52,9 +52,9 @@
                             			<option value=""
                             				<c:out value="${pageMaker.cri.type == null?'selected':''}"/>>-----------</option>
                             			<option value="T"
-                            				<c:out value="${pageMaker.cri.type eq 'T'?'selected':''}"/>>Company ID</option>
+                            				<c:out value="${pageMaker.cri.type eq 'T'?'selected':''}"/>>기업 ID</option>
  	                          			<option value="C"
- 	                          				<c:out value="${pageMaker.cri.type eq 'C'?'selected':''}"/>>Company Name</option>
+ 	                          				<c:out value="${pageMaker.cri.type eq 'C'?'selected':''}"/>>기업 이름</option>
 <!--  	                          		<option value="W"
 										<c:out value="${pageMaker.cri.type eq 'C'?'selected':'' }"/>>Company Content</option>                         			 -->
                             		</select>
@@ -65,7 +65,7 @@
                             		<input type='hidden' name='amount'
                             		 value='<c:out value= "${pageMaker.cri.amount }"/>'/>
                             		
-                            		<button class='btn btn-default'>Search</button>
+                            		<button class='btn btn-default'>검색</button>
                             	</form>
                             	
                             	</div>
@@ -77,7 +77,7 @@
                             	
                             		<c:if test="${pageMaker.prev }">
                             			<li class="paginate_button previous">
-                            			<a href="${pageMaker.startPage -1 }">Previous</a>
+                            			<a href="${pageMaker.startPage -1 }">이전</a>
                             			</li>
                             		</c:if>
                             		
@@ -88,7 +88,7 @@
                             		
                              		<c:if test="${pageMaker.next }"> 
                             			<li class="paginate_button next">
-                            			<a href="${pageMaker.endPage +1 }">Next</a></li>
+                            			<a href="${pageMaker.endPage +1 }">다음</a></li>
                              		</c:if> 
                             	</ul>
                             </div>
