@@ -137,7 +137,7 @@
 					<ul class="dropdown-menu dropdown-user">
 						<sec:authorize access="isAuthenticated()">
 							<li>
-								<form role="form" method='post' action="${pageContext.request.contextPath}/customLogout">
+								<form role="form" method='post' action="${pageContext.request.contextPath}/customLogout" id="logout">
 									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 									<a href="#" class="sub">
 										<i class="fa fa-sign-out fa-fw"></i> 로그아웃
@@ -201,7 +201,7 @@
 			var a = confirm("로그아웃 하시겠습니까?");
 			if(a == true) {
 				e.preventDefault();
-				$("form").submit();
+				$("#logout").submit();
 			}
 		});
 	</script>

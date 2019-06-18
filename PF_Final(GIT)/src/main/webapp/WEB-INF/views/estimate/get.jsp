@@ -117,7 +117,7 @@
 				</div>
 				<!-- <button data-oper='modify' class="btn btn-default">Modify</button> -->
  				<sec:authentication property="principal" var="pinfo"/>
-				<sec:authorize access="isAuthenticated()">
+				<sec:authorize access="hasRole('ROLE_USER')">
  					<c:if test="${pinfo.name eq estimate.name}">
 						<button data-oper='modify' class="btn btn-default">수정</button>
  					</c:if>
