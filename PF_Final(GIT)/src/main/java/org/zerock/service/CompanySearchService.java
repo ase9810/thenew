@@ -3,6 +3,7 @@ package org.zerock.service;
 import java.util.List;
 
 import org.zerock.domain.CompanySearchVO;
+import org.zerock.domain.CompanyVO;
 import org.zerock.domain.CompanySearchCriteria;
 
 public interface CompanySearchService {
@@ -23,6 +24,7 @@ public interface CompanySearchService {
 	
 	public List<CompanySearchVO> getList(CompanySearchCriteria cri);
 	
+	public List<CompanyVO> getAutoSearch(CompanySearchCriteria cri);
 	//
 	public int getTotal(CompanySearchCriteria cri);
 }

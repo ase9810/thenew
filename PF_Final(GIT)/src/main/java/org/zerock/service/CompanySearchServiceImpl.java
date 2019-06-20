@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.zerock.domain.CompanySearchVO;
+import org.zerock.domain.CompanyVO;
 import org.zerock.domain.CompanySearchCriteria;
 import org.zerock.mapper.CompanySearchMapper;
 
@@ -68,6 +69,14 @@ public class CompanySearchServiceImpl implements CompanySearchService {
 		log.info("getTotalCount");
 		
 		return mapper.getTotalCount(cri);
+	}
+	
+	@Override
+	public List<CompanyVO> getAutoSearch(CompanySearchCriteria cri) {
+		
+		log.info("get Search criteria:" + cri);
+		
+		return mapper.getAutoSearching(cri);
 	}
 //
 //	@Override

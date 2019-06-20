@@ -93,14 +93,6 @@
 								</div>
 							</a>
 						</li>
-						<li class="divider"></li>
-						<li>
-							<a href="${pageContext.request.contextPath}/main/aboutSiteMap">
-								<div>
-									<strong>사이트맵</strong>
-								</div>
-							</a>
-						</li>
 					</ul>
 					<!-- /.dropdown-messages -->
 				</li>

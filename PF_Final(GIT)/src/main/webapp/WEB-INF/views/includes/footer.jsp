@@ -170,7 +170,9 @@ html,body {
 
 
 <!-- jQuery 주석처리 -->
-<!--     <script src="/resources/vendor/jquery/jquery.min.js"></script> -->
+    <script src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <!-- Bootstrap Core JavaScript -->
 <script

@@ -3,6 +3,7 @@ package org.zerock.mapper;
 import java.util.List;
 
 import org.zerock.domain.CompanySearchVO;
+import org.zerock.domain.CompanyVO;
 import org.zerock.domain.CompanySearchCriteria;
 
 public interface CompanySearchMapper {
@@ -23,5 +24,7 @@ public interface CompanySearchMapper {
 	public List<CompanySearchVO> getListWithPaing(CompanySearchCriteria cri);
 	
 	public int getTotalCount(CompanySearchCriteria cri);
+	
+	public List<CompanyVO> getAutoSearching(CompanySearchCriteria cri);
 	
 }

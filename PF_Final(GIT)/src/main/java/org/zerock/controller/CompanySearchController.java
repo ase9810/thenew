@@ -37,6 +37,8 @@ public class CompanySearchController {
 		log.info("total: "+total);
 		
 		model.addAttribute("pageMaker", new CompanySearchPageDTO(cri, total));
+		
+		model.addAttribute("autosearch", service.getAutoSearch(cri));
 	}
 	
 	

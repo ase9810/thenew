@@ -5,10 +5,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <%@ include file="../includes/header.jsp" %>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/vendor/datatables/css/sort.css">
 
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">기업 리스트</h1>
+                    <h1 class="page-header"><a href="${pageContext.request.contextPath}/companySearch/list">기업 리스트</a></h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -19,22 +21,21 @@
                         <div class="panel-heading">기업 검색 페이지</div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                            <table class="table table-striped table-bordered table-hover">
-                                <thead>
+                            <table id="listTable" class="table table-striped table-bordered table-hover">
+                                <thead >
                                     <tr>
                                     	<th>기업 이름</th>
                                         <th>기업 ID</th>                                     
                                         <th>기업 도메인</th>
                                         <th>기업 업종</th>
                                         <th>등록일자</th>
-                                        
                                     </tr>
                                 </thead>
-                                
+<!--                                 기업 조회  -->
                                 <c:forEach var="Company" items="${list}" >
                                  <tr>
                                 	<td><a class='move' href='<c:out value="${Company.compId }"/>'>
-                                 	<c:out value="${Company.compName}"/></a></td>  
+                                 	<c:out value="${Company.compName}"/></a></td>                               	 
                                  	<td><c:out value="${Company.compId}"/>                             	
                                  	<td><a href='<c:out value="${Company.compDomain}"/>'>
                                 	 	<c:out value="${Company.compDomain}"/></a></td>
@@ -58,8 +59,10 @@
 <!--  	                          		<option value="W"
 										<c:out value="${pageMaker.cri.type eq 'C'?'selected':'' }"/>>Company Content</option>                         			 -->
                             		</select>
+                            		
+                            		                           		                           		               		
                             		<input type='text' name='keyword'
-                            		value='<c:out value="${pageMaker.cri.keyword }"/>'/>
+                            		value='<c:out value="${pageMaker.cri.keyword }"/>'/>                         			
                             		<input type='hidden' name='pageNum'
                             		 value='<c:out value= "${pageMaker.cri.pageNum }"/>'/>
                             		<input type='hidden' name='amount'
@@ -82,7 +85,7 @@
                             		</c:if>
                             		
                             		<c:forEach var="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage }">
-                             			<li class="paginate_button ${pageMaker.cri.pageNum == num ? "active":"" } ">
+                             			<li class="paginate_button ${pageMaker.cri.pageNum == num ? "active":""}">
                              			<a href="${num }">${num } </a></li>
                             		</c:forEach>
                             		
@@ -107,12 +110,47 @@
             </div>
             <!-- /.row -->
 
-  <script type="text/javascript"> 
+
+<!-- 오르내림 표시 -->
+<script> 
+
+$(function(){
+    $("#listTable").dataTable();
+});
  
-  
-  
+</script>
+
+
+<!-- 자동검색기능 -->
+<script>
+	$(document).ready(function(){	
+	
+	var array = new Array();
+		<c:forEach var="tags" items="${autosearch }">
+			array.push("${tags.compname}");
+			array.push("${tags.compid}");
+		</c:forEach> 
+
+		for (var i = 0; i < 100000; i++) {
+			array.push(i);
+	}
+		
+		
+		$("input[name=keyword]").autocomplete({
+			minLength: 2,
+			source:array
+		});
+	});
+
+	</script> 
+    
+
+<script type="text/javascript"> 
+  		
 	$(document).ready(function() {
 		
+//--------------------------------------------------------------------------------------		
+		//조회 기능
 		$(".move").on("click", function(e) {
 			e.preventDefault();
 			actionForm.append("<input type='hidden' name='CompId' value='"+$(this).attr("href")+"'>");
@@ -122,11 +160,12 @@
 		
 		
 		var searchForm = $("#searchForm");
-		
+				
 		$("#searchForm button").on("click", function(e){
 
 			if(!searchForm.find("option:selected").val()) {
 				alert("검색종류를 선택하세요.");
+				
 				return false;
 			}	
 			if(!searchForm.find("input[name='keyword']").val()) {
@@ -151,5 +190,9 @@
 				});
 				
 		});
+	
 </script>
- <%@ include file="../includes/footer.jsp" %>
+
+
+
+<%@ include file="../includes/footer.jsp" %>
